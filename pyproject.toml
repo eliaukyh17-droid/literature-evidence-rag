@@ -1,0 +1,57 @@
+[project]
+name = "literature-evidence-kb"
+version = "0.4.0"
+description = "Local literature retrieval, streaming evidence answers and research workbench"
+requires-python = ">=3.11,<3.14"
+license = "MIT"
+readme = "README.md"
+dependencies = [
+  "anyio>=4,<5",
+  "fastapi>=0.115,<1",
+  "pydantic>=2.10,<3",
+  "uvicorn>=0.30,<1",
+  "httpx>=0.28,<1",
+]
+
+[project.optional-dependencies]
+vector = [
+  "numpy>=2,<3",
+  "onnxruntime>=1.20,<2",
+  "tokenizers>=0.21,<0.24",
+  "qdrant-client>=1.12,<2",
+]
+
+[project.urls]
+Repository = "https://github.com/eliaukyh17-droid/literature-evidence-rag"
+Issues = "https://github.com/eliaukyh17-droid/literature-evidence-rag/issues"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "httpx>=0.28,<1", "ruff>=0.12,<1"]
+
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/literature_kb"]
+
+[project.scripts]
+literature-kb = "literature_kb.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = ["scripts/audit_corpus.py", "tests/test_corpus_audit.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[[tool.uv.index]]
+name = "tuna"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true

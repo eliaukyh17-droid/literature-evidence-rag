@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>文献研究台 · Literature Lab</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" type="module"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="文献研究台首页"><span class="brand-mark">文</span><span>文献研究台<small>LITERATURE LAB</small></span></a>
+    <div class="workspace-label"><span class="status-dot"></span> 本地研究空间</div>
+    <nav aria-label="工作区"><span class="nav-current">证据问答 <span>01</span></span></nav>
+    <section class="sidebar-section">
+      <h2>从一个问题开始</h2>
+      <button class="example" data-question="文献导入后怎样保留证据定位？" data-mode="bm25">文献如何保留来源 <span>↗</span></button>
+      <button class="example" data-question="替换文档后旧引用如何处理？" data-mode="bm25">文档更新后的引用 <span>↗</span></button>
+      <button class="example" data-question="莫诺马赫有哪些译名？" data-mode="bm25">专有名词与异译名 <span>↗</span></button>
+    </section>
+    <section class="sidebar-section controls">
+      <h2>检索设置</h2>
+      <label for="scope">文献范围</label><select id="scope"><option value="">全部已入库文献</option></select>
+      <label for="mode">检索方式</label><select id="mode"><option value="hybrid_terms">混合检索 + 中俄术语</option><option value="hybrid">混合检索</option><option value="dense">多语向量检索</option><option value="bm25">关键词检索</option></select>
+      <div class="control-pair"><div><label for="top-k">候选片段</label><select id="top-k"><option value="1">1 段 · 轻量</option><option value="3">3 段</option><option value="5">5 段</option></select></div><div><label for="max-tokens">回答长度</label><select id="max-tokens"><option value="256">标准</option><option value="384">较长</option><option value="512">详细</option></select></div></div>
+    </section>
+    <footer class="sidebar-footer"><span class="mini-label">当前知识库</span><strong id="library-summary">正在读取…</strong><p>中文提问 · 中俄文资料<br>每个问题独立检索</p><a href="/docs" target="_blank" rel="noopener">API 文档 ↗</a></footer>
+  </aside>
+
+  <main>
+    <header class="topbar"><div><span class="eyebrow">RESEARCH WORKSPACE</span><h1>让回答回到文献</h1></div><span id="model-status" class="connection">正在连接</span></header>
+    <div class="workspace">
+      <section class="conversation" aria-label="问答区">
+        <div id="welcome" class="welcome"><span class="paper-icon">[ ]</span><h2>从问题，到可查阅的依据。</h2><p>检索相关文献，依据片段回答。<br>回答旁的来源卡片可展开查看原文。</p><div class="flow"><span>检索文献</span><b>→</b><span>生成回答</span><b>→</b><span>核对来源</span></div></div>
+        <div id="messages" role="log" aria-label="问答记录"></div>
+        <form id="question-form" class="composer">
+          <label class="sr-only" for="question">输入研究问题</label>
+          <textarea id="question" maxlength="1000" rows="3" placeholder="输入你的问题，例如《训诫》如何理解王公的责任？" required></textarea>
+          <div class="composer-bottom"><span id="input-hint">Ctrl + Enter 发送 · 每问独立检索</span><div><button id="stop" type="button" class="stop" hidden>停止生成</button><button id="send" type="submit" class="send">提问 <span>↑</span></button></div></div>
+        </form>
+      </section>
+      <aside class="evidence-panel" aria-label="来源区"><div class="panel-heading"><div><span class="eyebrow">SOURCE MATERIALS</span><h2>本次文献依据</h2></div><span id="source-count" class="count">0</span></div><p id="source-hint">提问后，相关文献会出现在这里。</p><div id="sources"></div><div class="source-note">点击来源可查看对应片段与完整页上下文。</div></aside>
+    </div>
+  </main>
+
+  <dialog id="evidence-dialog" aria-labelledby="evidence-title"><div class="dialog-heading"><div><span class="eyebrow">ORIGINAL EVIDENCE</span><h2 id="evidence-title">原文证据</h2></div><button id="close-evidence" aria-label="关闭原文">×</button></div><p id="evidence-meta"></p><div id="evidence-body"></div></dialog>
+</body>
+</html>
